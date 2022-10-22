@@ -8,9 +8,9 @@ MyCardScreen demonstrates the following screen:
 
 CommonCard is a sub component that is used in MyCardScreen.
 
-Please follow the instructions below to make your changes regarding code logic/bugs/code styles/improvements, etc. You can simply imagine that if you are implementing this page, what would you do?
+Please follow the instructions below to make your changes regarding code logic/bugs/code styles/improvements, etc. You can simply imagine that if you are implementing this page, what would you do? You can either directly make changes to code or add comments to code.
 
-This test requires knowledge of React and Bootstrap
+This test requires knowledge of React and Bootstrap.
 
 1. Login to your personal Github account
 2. Fork this repository
