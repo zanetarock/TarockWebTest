@@ -11,30 +11,57 @@ const MyCard = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://35.184.195.100:3000/api/user/${userId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    setUserData(data[0]);
+        const fetchUser = async (userId) => {
+            try {
+              const res = await fetch(`http://35.184.195.100:3000/api/user/${userId}`);
+              const data = await res.json();
+      
+              if (data.length>0) {
+                setUserData(data[0]);
+              }
+            } catch (err) {
+              console.error( err);
+            }
+      
+            fetchResult(userId);
+          };
+      
+          const fetchResult = async (userId) => {
+            try {
+              const res = await fetch(`http://35.184.195.100:3000/api/result?userId=${userId}`);
+              const data = await res.json();
+      
+              if (data.length > 0) {
+                const type = data[0].result_code;
+                try {
+                fetchType(type);
+      
+                } catch (err) {
+                  console.error(err)
                 }
-            })
-            .catch(err => console.log(err.message));
-        fetch(`http://35.184.195.100:3000/api/result?userId=${userId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.length > 0) {
-                    const type = data[0].result_code;
-                    fetch(`http://35.184.195.100:3000/api/card/${type}`)
-                        .then(response => response.json())
-                        .then(data => setCardData(data))
-                        .catch(err => console.log(err.message));
-                } else {
-                    // User hasn't tested, navigate to the test page.
-                    // TODO(Zane): show popup window.
-                    navigate("/test");
-                }
-            })
-            .catch(err => console.log(err.message));
+              } else {
+                // User hasn't tested, navigate to the test page.
+                // TODO(Zane): show popup window.
+                navigate("/test");
+              }
+            } catch (err) {
+              console.error(err);
+            }
+          };
+          const fetchType = async (type) => {
+            try {
+              const res = await fetch(`http://35.184.195.100:3000/api/card/${type}`);
+              const data = await res.json()
+      
+              setCardData(data)
+            } catch (err) {
+              console.error(err);
+            }
+      
+          };
+
+          fetchUser(userId);
+          
     }, [userId]);
     if (userData.name && cardData.description) {
         return (
